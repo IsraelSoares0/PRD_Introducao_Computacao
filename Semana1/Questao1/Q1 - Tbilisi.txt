@@ -1,0 +1,168 @@
+Bairros:
+0  - Abanotubani      - 82
+1  - Lisi             - 55
+2  - Digomi           - 74
+3  - Saburtalo        - 69
+4  - Vake             - 90
+5  - Nutsubidze       - 73
+6  - Ortachala        - 88
+7  - Mtatsminda       - 77
+8  - Isani            - 62
+9  - Gldani           - 85
+10 - Marjanishvili    - 71
+11 - Rustaveli        - 92
+12 - Avlabari         - 68
+13 - Nadzaladevi      - 74
+14 - Samgori          - 58
+15 - Didube           - 80
+16 - Chugureti        - 76
+17 - Varketili        - 65
+18 - Sanzona          - 79
+19 - Kiketi           - 83
+
+---------------------------------------------
+
+Fluxos desejados:
+0  (Abanotubani):     {4, 2, 9}
+1  (Lisi):            {3, 4, 7}
+2  (Digomi):          {0, 4, 9}
+3  (Saburtalo):       {4, 2, 10}
+4  (Vake):            {3, 7, 11}
+5  (Nutsubidze):      {4, 7, 16}
+6  (Ortachala):       {7, 4, 8}
+7  (Mtatsminda):      {4, 6, 11}
+8  (Isani):           {6, 9, 14}
+9  (Gldani):          {4, 2, 13}
+10 (Marjanishvili):   {11, 3, 16}
+11 (Rustaveli):       {4, 7, 15}
+12 (Avlabari):        {8, 11, 17}
+13 (Nadzaladevi):     {15, 9, 2}
+14 (Samgori):         {17, 8, 12}
+15 (Didube):          {11, 13, 2}
+16 (Chugureti):       {10, 5, 18}
+17 (Varketili):       {14, 8, 12}
+18 (Sanzona):         {16, 19, 13}
+19 (Kiketi):          {17, 11, 18}
+
+---------------------------------------------
+
+Distâncias entre bairros (4 Bairros Mais Próximos de Cada Bairro)
+Mais próximos de 0 – Abanotubani:
+2 (Digomi) – 4
+9 (Gldani) – 7
+13 (Nadzaladevi) – 9
+15 (Didube) – 10
+
+Mais próximos de 1 – Lisi:
+3 (Saburtalo) – 5
+4 (Vake) – 7
+7 (Mtatsminda) – 9
+10 (Marjanishvili) – 11
+
+Mais próximos de 2 – Digomi:
+0 (Abanotubani) – 4
+3 (Saburtalo) – 3
+9 (Gldani) – 6
+15 (Didube) – 7
+
+Mais próximos de 3 – Saburtalo:
+2 (Digomi) – 3
+4 (Vake) – 4
+10 (Marjanishvili) – 6
+1 (Lisi) – 5
+
+Mais próximos de 4 – Vake:
+3 (Saburtalo) – 4
+5 (Nutsubidze) – 3
+7 (Mtatsminda) – 6
+11 (Rustaveli) – 4
+
+Mais próximos de 5 – Nutsubidze:
+4 (Vake) – 3
+7 (Mtatsminda) – 7
+16 (Chugureti) – 8
+10 (Marjanishvili) – 9
+
+Mais próximos de 6 – Ortachala:
+7 (Mtatsminda) – 5
+8 (Isani) – 9
+11 (Rustaveli) – 10
+12 (Avlabari) – 8
+
+Mais próximos de 7 – Mtatsminda:
+4 (Vake) – 6
+6 (Ortachala) – 5
+11 (Rustaveli) – 3
+5 (Nutsubidze) – 7
+
+Mais próximos de 8 – Isani:
+12 (Avlabari) – 4
+14 (Samgori) – 6
+17 (Varketili) – 4
+6 (Ortachala) – 9
+
+Mais próximos de 9 – Gldani:
+0 (Abanotubani) – 7
+2 (Digomi) – 6
+13 (Nadzaladevi) – 5
+18 (Sanzona) – 8
+
+Mais próximos de 10 – Marjanishvili:
+11 (Rustaveli) – 3
+3 (Saburtalo) – 6
+16 (Chugureti) – 6
+5 (Nutsubidze) – 9
+
+Mais próximos de 11 – Rustaveli:
+7 (Mtatsminda) – 3
+4 (Vake) – 4
+10 (Marjanishvili) – 3
+15 (Didube) – 5
+
+Mais próximos de 12 – Avlabari:
+8 (Isani) – 4
+6 (Ortachala) – 8
+14 (Samgori) – 5
+17 (Varketili) – 6
+
+Mais próximos de 13 – Nadzaladevi:
+15 (Didube) – 7
+9 (Gldani) – 5
+18 (Sanzona) – 9
+2 (Digomi) – 9
+
+Mais próximos de 14 – Samgori:
+17 (Varketili) – 3
+8 (Isani) – 6
+12 (Avlabari) – 5
+19 (Kiketi) – 10
+
+Mais próximos de 15 – Didube:
+13 (Nadzaladevi) – 7
+11 (Rustaveli) – 5
+2 (Digomi) – 7
+0 (Abanotubani) – 10
+
+Mais próximos de 16 – Chugureti:
+10 (Marjanishvili) – 6
+5 (Nutsubidze) – 8
+18 (Sanzona) – 5
+11 (Rustaveli) – 7
+
+Mais próximos de 17 – Varketili:
+14 (Samgori) – 3
+8 (Isani) – 4
+12 (Avlabari) – 6
+19 (Kiketi) – 8
+
+Mais próximos de 18 – Sanzona:
+16 (Chugureti) – 5
+13 (Nadzaladevi) – 9
+9 (Gldani) – 8
+19 (Kiketi) – 7
+
+Mais próximos de 19 – Kiketi:
+17 (Varketili) – 8
+14 (Samgori) – 10
+18 (Sanzona) – 7
+11 (Rustaveli) – 11
