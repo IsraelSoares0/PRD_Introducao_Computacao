@@ -24,6 +24,14 @@ void obter_bairros_viaveis(Bairro bairros[], int& size) {
     }
 }
 
+Bairro conexoes_viaveis(Bairro bairros[], int* dist, int& size) {
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < 3; j++) {
+            
+        }
+    }
+}
+
 int main() {
     // Lista de bairros, viabilidade e fluxo
     int size = 20;
@@ -77,7 +85,7 @@ int main() {
 
     obter_bairros_viaveis(bairros, size);
 
-    
+
 
     return 0;
 }
