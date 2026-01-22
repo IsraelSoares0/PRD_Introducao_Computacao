@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cstdlib>
+#include <tuple>
 
 using namespace std;
 
@@ -11,11 +13,19 @@ struct Bairro {
     int fluxo[3];
 };
 
-void obter_bairros_viaveis(Bairro bairros[], int& size) {
-    for (int i = 0; i < size; i++) {
+struct Caminho {
+    int tamanho;
+    int soma_viabilidade;
+    int media_viabilidade;
+    int demanda;
+    int custo;
+};
+
+void obter_bairros_viaveis(Bairro bairros[], int* size) {
+    for (int i = 0; i < (*size); i++) {
         // Verifica todos os bairros com viabilidade < 70 e "retira" eles do array
         if (bairros[i].viabilidade < 70) {
-            for (int j = i; j < size - 1; ++j) {
+            for (int j = i; j < (*size) - 1; ++j) {
                 bairros[j] = bairros[j + 1];
             }
             --size;     // Reducao do tamanho
@@ -24,13 +34,65 @@ void obter_bairros_viaveis(Bairro bairros[], int& size) {
     }
 }
 
-Bairro conexoes_viaveis(Bairro bairros[], int* dist, int& size) {
-    for (int i = 0; i < size; i++) {
+void conexoes_viaveis(Bairro bairros[], int (*dist)[20], int* size, vector <tuple<int, int>> conexoes) {
+    // Varredura de bairros viávies
+    for (int i = 0; i < (*size); i++) {
+        // Fluxos desejados
         for (int j = 0; j < 3; j++) {
-            
+            // Verificação de Distancia <= 10
+            int d = dist[bairros[i].index][bairros[i].fluxo[j]];
+
+            if (d > 0 && d <= 10) {
+                conexoes.push_back(make_tuple(i, j));
+            }
         }
     }
 }
+
+void caminhos_3elem(Bairro bairros[], int* size, vector <tuple<int, int>> conexoes, vector <tuple<int, int, int>> caminhos) {
+    // Conexoes A -> B
+    for (int i = 0; i < conexoes.size(); i++) {
+        int A = get<0>(conexoes[i]);
+        int B = get<1>(conexoes[i]);
+        int B_index_original = bairros[A].fluxo[B];
+
+        int b_index = -1;
+        for (int k = 0; k < (*size); k++) {
+            if (bairros[k].index == B_index_original) {
+                b_index = k;
+                break;
+            }
+        }
+        if (b_index == -1) continue;
+
+        // Conexoes B -> C
+        for (int j = 0; j < conexoes.size(); j++) {
+            int origemBC = get<0>(conexoes[j]);
+            if (origemBC != B) continue;
+
+            int fluxoBC = get<1>(conexoes[j]);
+            int c_index_original = bairros[B].fluxo[fluxoBC];
+            
+            // Encontrar indice de C em Bairros
+            int C = -1;
+            for (int k = 0; k < (*size); k++) {
+                if (bairros[k].index == c_index_original) {
+                    C = k;
+                    break;
+                }
+            }
+            if (C == -1) continue;
+
+            // Ciclo trivial
+            if (A == B || B == C || A == C) continue;
+
+            // Caminho válido A -> B -> C
+            caminhos.push_back(make_tuple(A, B, C));
+        }
+    }
+}
+
+
 
 int main() {
     // Lista de bairros, viabilidade e fluxo
@@ -83,7 +145,9 @@ int main() {
         /*19*/ { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,11, 0, 0,10, 0, 0, 8, 7, 0 }
     };
 
-    obter_bairros_viaveis(bairros, size);
+    vector<tuple<int, int>> conexoes_bairros;
+
+    obter_bairros_viaveis(bairros, &size);
 
 
 
