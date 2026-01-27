@@ -3,6 +3,7 @@
 #include <vector>
 #include <cstdlib>
 #include <tuple>
+#include <algorithm>
 
 using namespace std;
 
@@ -13,13 +14,20 @@ struct Bairro {
     int fluxo[3];
 };
 
-struct Caminho {
+struct Linha {
+    vector<tuple<int, int>> percurso; // (indice array, indice original)
     int tamanho;
-    int soma_viabilidade;
-    int media_viabilidade;
-    int demanda;
-    int custo;
+    int soma_viabilidade = 0;
+    double media_viabilidade = 0;
+    int demanda_atendida;
+    int custo = 0;
 };
+
+Linha construir_linha(const vector<int>& caminho, Bairro bairros[], int dist[20][20]);
+void obter_bairros_viaveis(Bairro bairros[], int* size);
+void dfs_caminhos(Bairro bairros[], int size, int dist[20][20], int atual, vector<int>& caminho_atual, vector<Linha>& linhas);
+vector<Linha> encontrar_linhas_metro(Bairro bairros[], int size, int dist[20][20]);
+Linha construir_linha(const vector<int>& caminho, Bairro bairros[], int dist[20][20]);
 
 void obter_bairros_viaveis(Bairro bairros[], int* size) {
     for (int i = 0; i < (*size); i++) {
@@ -28,71 +36,91 @@ void obter_bairros_viaveis(Bairro bairros[], int* size) {
             for (int j = i; j < (*size) - 1; ++j) {
                 bairros[j] = bairros[j + 1];
             }
-            --size;     // Reducao do tamanho
+            --(*size);     // Reducao do tamanho
             --i;        // Reavaliar posicao atual
         }
     }
 }
 
-void conexoes_viaveis(Bairro bairros[], int (*dist)[20], int* size, vector <tuple<int, int>> conexoes) {
-    // Varredura de bairros viávies
-    for (int i = 0; i < (*size); i++) {
-        // Fluxos desejados
-        for (int j = 0; j < 3; j++) {
-            // Verificação de Distancia <= 10
-            int d = dist[bairros[i].index][bairros[i].fluxo[j]];
-
-            if (d > 0 && d <= 10) {
-                conexoes.push_back(make_tuple(i, j));
-            }
-        }
+void dfs_caminhos(Bairro bairros[], int size, int dist[20][20], int atual, vector<int>& caminho_atual, vector<Linha>& linhas) {
+    // Se caminho pelo menos 3 bairros, armazena
+    if (caminho_atual.size() >= 3) {
+        linhas.push_back(construir_linha(caminho_atual, bairros, dist));
     }
-}
 
-void caminhos_3elem(Bairro bairros[], int* size, vector <tuple<int, int>> conexoes, vector <tuple<int, int, int>> caminhos) {
-    // Conexoes A -> B
-    for (int i = 0; i < conexoes.size(); i++) {
-        int A = get<0>(conexoes[i]);
-        int B = get<1>(conexoes[i]);
-        int B_index_original = bairros[A].fluxo[B];
+    // Tenta expandir
+    for (int j = 0; j < 3; j++) {
+        int prox_index_original = bairros[atual].fluxo[j];
+        int d = dist[bairros[atual].index][prox_index_original];
 
-        int b_index = -1;
-        for (int k = 0; k < (*size); k++) {
-            if (bairros[k].index == B_index_original) {
-                b_index = k;
+        if (d <= 0 || d > 10) continue;
+
+        // Encontrar o indice do proximo bairro viavel
+        int prox = -1;
+        for (int k = 0; k < size; k++) {
+            if (bairros[k].index == prox_index_original) {
+                prox = k;
                 break;
             }
         }
-        if (b_index == -1) continue;
+        if (prox == -1) continue;
 
-        // Conexoes B -> C
-        for (int j = 0; j < conexoes.size(); j++) {
-            int origemBC = get<0>(conexoes[j]);
-            if (origemBC != B) continue;
+        // Evita Ciclos
+        if (find(caminho_atual.begin(), caminho_atual.end(), prox) != caminho_atual.end()) continue;
 
-            int fluxoBC = get<1>(conexoes[j]);
-            int c_index_original = bairros[B].fluxo[fluxoBC];
-            
-            // Encontrar indice de C em Bairros
-            int C = -1;
-            for (int k = 0; k < (*size); k++) {
-                if (bairros[k].index == c_index_original) {
-                    C = k;
-                    break;
-                }
-            }
-            if (C == -1) continue;
-
-            // Ciclo trivial
-            if (A == B || B == C || A == C) continue;
-
-            // Caminho válido A -> B -> C
-            caminhos.push_back(make_tuple(A, B, C));
-        }
+        // Backtracking
+        caminho_atual.push_back(prox);
+        dfs_caminhos(bairros, size, dist, prox, caminho_atual, linhas);
+        caminho_atual.pop_back();
     }
 }
 
+vector<Linha> encontrar_linhas_metro(Bairro bairros[], int size, int dist[20][20]) {
+    vector<Linha> linhas;
 
+    for (int i = 0; i < size; i++) {
+        vector<int> caminho_atual;
+        caminho_atual.push_back(i);
+        dfs_caminhos(bairros, size, dist, i, caminho_atual, linhas);
+    }
+
+    return linhas;
+}
+
+Linha construir_linha(const vector<int>& caminho, Bairro bairros[], int dist[20][20]) {
+    Linha linha{};
+
+    linha.tamanho = caminho.size();
+    
+    // Preenche percurso e soma viabilidades
+    for (int idx : caminho) {
+        linha.percurso.emplace_back(idx, bairros[idx].index);
+        linha.soma_viabilidade += bairros[idx].viabilidade;
+    }
+
+    linha.media_viabilidade = static_cast<double>(linha.soma_viabilidade) / linha.tamanho;
+
+    // Demanda atendida e custo
+    for (int i = 0; i < caminho.size() - 1; i++) {
+        int A = caminho[i];
+        int B = caminho[i + 1];
+
+        int indexA = bairros[A].index;
+        int indexB = bairros[B].index;
+
+        int d = dist[indexA][indexB];
+        if (d > 0) linha.custo += d;
+
+        for (int f = 0; f < 3; f++) {
+            if (bairros[A].fluxo[f] == indexB) {
+                linha.demanda_atendida++;
+                break;
+            }
+        }
+    }
+
+    return linha;
+}
 
 int main() {
     // Lista de bairros, viabilidade e fluxo
@@ -145,11 +173,42 @@ int main() {
         /*19*/ { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,11, 0, 0,10, 0, 0, 8, 7, 0 }
     };
 
-    vector<tuple<int, int>> conexoes_bairros;
+    cout << "teste1" << endl;
+
+    vector<tuple<int, int, int>> caminhos;
 
     obter_bairros_viaveis(bairros, &size);
 
+    cout << "teste2" << endl;
 
+    auto linhas = encontrar_linhas_metro(bairros, size, dist);
+
+    cout << "teste3" << endl;
+
+    cout << "Total de linhas encontradas: " << linhas.size() << endl << endl;
+
+    for (int i = 0; i < linhas.size(); i++) {
+        const Linha& L = linhas[i];
+
+        cout << "Linha " << i + 1 << ":" << endl;
+
+        cout << "  Percurso: ";
+        for (const auto& p : L.percurso) {
+            int idx_array    = get<0>(p);
+            int idx_original = get<1>(p);
+            cout << bairros[idx_array].nome
+                << "(" << idx_original << ") ";
+        }
+        cout << endl;
+
+        cout << "  Tamanho da linha: " << L.tamanho << endl;
+        cout << "  Soma das viabilidades: " << L.soma_viabilidade << endl;
+        cout << "  Media de viabilidade: " << L.media_viabilidade << endl;
+        cout << "  Demanda atendida: " << L.demanda_atendida << endl;
+        cout << "  Custo da linha: " << L.custo << endl;
+
+        cout << "-------------------------------------" << endl;
+    }
 
     return 0;
 }
