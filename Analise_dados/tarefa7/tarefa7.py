@@ -8,8 +8,8 @@ def normalizar(yraw):
 dados = np.loadtxt('teste-tyto.csv')
 
 # Intervalo da queima
-t_ini = 163250
-t_fim = 164000
+t_ini = 163300
+t_fim = 163850
 
 x = dados[:, 0]
 y = normalizar(dados[:, 1])
