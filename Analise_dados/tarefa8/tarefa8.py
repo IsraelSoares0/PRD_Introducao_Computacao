@@ -19,10 +19,10 @@ mask = (x >= t_ini) & (x <= t_fim)
 x_q = x[mask]
 y_q = y[mask]
 
-t_queima = (t_fim - t_ini) / 1000
+t_queima = (t_fim - t_ini) * 1e-3
 empuxo_medio = np.mean(y_q)
 empuxo_max = np.max(y_q)
-t_pico = (np.argmax(y_q) + t_ini) / 1000
+t_pico = (np.argmax(y_q) + t_ini) * 1e-3
 impulso = np.trapezoid(y_q, x_q * 1e-3)
 
 print("\n----- RESULTADOS PRINCIPAIS -----\n")
