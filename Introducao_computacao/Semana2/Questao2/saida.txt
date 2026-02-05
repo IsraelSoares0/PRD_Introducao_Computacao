@@ -1,0 +1,9 @@
+Rmin = 204.292 | Rmax = 308.116
+
+Tamanho da particao: 20.7648
+
+Particao: 0 [204.3 - 225.1]: 227 lançamentos (22.7%)
+Particao: 1 [225.1 - 245.8]: 198 lançamentos (19.8%)
+Particao: 2 [245.8 - 266.6]: 206 lançamentos (20.6%)
+Particao: 3 [266.6 - 287.4]: 196 lançamentos (19.6%)
+Particao: 4 [287.4 - 308.1]: 172 lançamentos (17.2%)
