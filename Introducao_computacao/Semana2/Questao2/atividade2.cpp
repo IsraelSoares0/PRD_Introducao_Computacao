@@ -119,6 +119,14 @@ int main() {
         }
     }
 
+    cout << "--------- Parametros Utilizados ---------" << endl << endl;
+    cout << "   -> Numero de simulacoes = " << N << endl;
+    cout << "   -> Velocidade nominal = " << v0 << endl;
+    cout << "   -> Variacao de velocidade = " << deltaV << endl;
+    cout << "   -> Angulo nominal = " << theta0 << endl;
+    cout << "   -> Variacao maxima do angulo = " << deltaTheta << endl;
+    cout << "   -> Numero de regioes para analise da distribuicao = " << K << endl << endl;
+
     cout << "Rmin = " << Rmin << " | Rmax = " << Rmax << endl << endl;;
 
     double particao = (Rmax - Rmin) / K;

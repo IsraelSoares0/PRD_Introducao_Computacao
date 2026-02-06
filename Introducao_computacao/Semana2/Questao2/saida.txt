@@ -1,9 +1,19 @@
-Rmin = 204.292 | Rmax = 308.116
+--------- Parametros Utilizados ---------
 
-Tamanho da particao: 20.7648
+   -> Numero de simulacoes = 1000
+   -> Velocidade nominal = 50
+   -> Variacao de velocidade = 5
+   -> Angulo nominal = 45
+   -> Variacao maxima do angulo = 5
+   -> Numero de regioes para analise da distribuicao = 5
 
-Particao: 0 [204.3 - 225.1]: 227 lançamentos (22.7%)
-Particao: 1 [225.1 - 245.8]: 198 lançamentos (19.8%)
-Particao: 2 [245.8 - 266.6]: 206 lançamentos (20.6%)
-Particao: 3 [266.6 - 287.4]: 196 lançamentos (19.6%)
-Particao: 4 [287.4 - 308.1]: 172 lançamentos (17.2%)
+Rmin = 203.878 | Rmax = 307.911
+
+Tamanho da particao: 20.8067
+
+Particao: 0 [203.9 - 224.7]: 226 lançamentos (22.6%)
+Particao: 1 [224.7 - 245.5]: 210 lançamentos (21.0%)
+Particao: 2 [245.5 - 266.3]: 188 lançamentos (18.8%)
+Particao: 3 [266.3 - 287.1]: 190 lançamentos (19.0%)
+Particao: 4 [287.1 - 307.9]: 185 lançamentos (18.5%)
+
