@@ -16,7 +16,7 @@ y = normalizar(dados[:, 1])
 
 mask = (x >= t_ini) & (x <= t_fim)
 
-x_q = x[mask]
+x_q = x[mask] - t_ini
 y_q = y[mask]
 
 plt.plot(x_q, y_q)
