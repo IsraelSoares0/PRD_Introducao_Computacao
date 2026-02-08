@@ -16,19 +16,19 @@ y = normalizar(dados[:, 1])
 
 mask = (x >= t_ini) & (x <= t_fim)
 
-x_q = x[mask]
+x_q = x[mask] - t_ini
 y_q = y[mask]
 
-t_queima = (t_fim - t_ini) * 1e-3
+t_queima = (t_fim - t_ini)
 empuxo_medio = np.mean(y_q)
 empuxo_max = np.max(y_q)
-t_pico = (np.argmax(y_q) + t_ini) * 1e-3
+t_pico = (np.argmax(y_q))
 impulso = np.trapezoid(y_q, x_q * 1e-3)
 
 print("\n----- RESULTADOS PRINCIPAIS -----\n")
 
-print(f"Tempo de queima [s]: {t_queima:.2f}")
+print(f"Tempo de queima [ms]: {t_queima:.2f}")
 print(f"Empuxo medio [N]: {empuxo_medio:.2f}")
 print(f"Empuxo maximo [N]: {empuxo_max:.2f}")
-print(f"Tempo de pico [s]: {t_pico:.2f}")
+print(f"Tempo de pico [ms]: {t_pico:.2f}")
 print(f"Impulso total [N·s]: {impulso:.2f}\n")
